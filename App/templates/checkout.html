@@ -1,0 +1,239 @@
+{% extends 'partial/base.html' %}
+{% load static %} 
+
+{% block title %}
+	Check Out
+{% endblock title %}
+
+{% block content %}
+	<!-- Start Hero Section -->
+		<div class="hero">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-5">
+						<div class="intro-excerpt">
+							<h1>Checkout</h1>
+						</div>
+					</div>
+					<div class="col-lg-7">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- End Hero Section -->
+
+	<div class="untree_co-section">
+		<div class="container">
+			<div class="row mb-5">
+				<div class="col-md-12">
+					<div class="border p-4 rounded" role="alert">
+					Returning customer? <a href="#">Click here</a> to login
+					</div>
+				</div>
+			</div>
+			<form action="" method="POST">
+				{% csrf_token %}
+				
+				<div class="row">
+					<div class="col-md-6 mb-5 mb-md-0">
+						<h2 class="h3 mb-3 text-black">Billing Details</h2>
+						<div class="p-3 p-lg-5 border bg-white">
+						<div class="form-group">
+							<label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
+							<select id="c_country" name="country" class="form-control" required>
+								<option value="1">Select a country</option>    
+								<option value="Nepal">Nepal</option>    
+							</select>
+						</div>
+						<div class="form-group row">
+							<div class="col-md-6">
+							<label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_fname" name="firstName" placeholder="First Name.." required>
+							</div>
+							<div class="col-md-6">
+							<label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_lname" name="lastName" placeholder="Last Name.." required>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-md-12">
+							<label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address" required>
+							</div>
+						</div>
+
+						<div class="form-group mt-3">
+							<input type="text" class="form-control" name="optionalAddress" placeholder="Apartment, suite, unit etc. (optional)">
+						</div>
+
+						<div class="form-group row">
+							<div class="col-md-12">
+							<label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_state_country" name="c_state_country" required placeholder="Nepal/bagmati/lalitpur..">
+							</div>
+							<!-- <div class="col-md-6">
+							<label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+							</div> -->
+						</div>
+
+						<div class="form-group row mb-5">
+							<div class="col-md-12">
+							<label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_email_address" name="email" placeholder="example@gmail.com" required>
+							</div>
+							<div class="col-md-12">
+							<label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="c_phone" name="phoneNumber" placeholder="Phone Number" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="c_order_notes" class="text-black">Order Notes</label>
+							<textarea name="orderNote" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+						</div>
+
+						</div>
+					</div>
+					<div class="col-md-6">
+
+						<!-- <div class="row mb-5">
+							<div class="col-md-12">
+								<h2 class="h3 mb-3 text-black">Coupon Code</h2>
+								<div class="p-3 p-lg-5 border bg-white">
+
+								<label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+								<div class="input-group w-75 couponcode-wrap">
+									<input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+									<div class="input-group-append">
+										<button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
+									</div>
+								</div>
+
+								</div>
+							</div>
+						</div> -->
+
+						<div class="row mb-5">
+						<div class="col-md-12">
+							<h2 class="h3 mb-3 text-black">Your Order</h2>
+							<div class="p-3 p-lg-5 border bg-white">
+							<table class="table site-block-order-table mb-5">
+								<thead>
+								<th>Product</th>
+								<th>Total</th>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+										
+									<td class="text-black">NRs. {{subtotal | floatformat:'2g' }}
+										<input type="hidden" name='main_price'  id="price" value="123" min="1" readonly>	
+									</td>
+								</tr>
+								<tr>
+									<td>
+										{{VOD.Product_name}} <strong class="mx-2">x</strong> <input type="number" name='quantitys' class='input-form-order-qualtity text-center form-control'  id="quantity" value="1" min="1" required='required' aria-label="Example text with button addon" aria-describedby="button-addon1" >  </td>
+										
+									<td>
+										NRs.<input type="number" name='total_price' class='input-form-order'  id="total-price" value="100" readonly>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="col-md-12 input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 150px;">
+											<!-- <div class="input-group-prepend">
+											<button class="btn btn-outline-black decrease" type="button" id="decrease-btn">&minus;</button>
+										  </div> -->
+										  <!-- <input type="number" name='quantitys' class='input-form-order-qualtity text-center form-control w-50'  id="quantity" value="1" min="1" required='required' aria-label="Example text with button addon" aria-describedby="button-addon1" ><br><br> -->
+										  <!-- <input type="number" name="quantity" id="quantity" class="form-control text-center quantity-amount" value="1" min="1" aria-label="Example text with button addon" aria-describedby="button-addon"> -->
+										<!-- <div class="input-group-append">
+										  <button class="btn btn-outline-black increase" type="button" id="increase-btn">&plus;</button>
+										</div> -->
+									  </div>
+									</td>
+								</tr>
+								<tr>
+									<td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+									<td class="text-black font-weight-bold"><strong> NRs.{{GA | floatformat:'2g'}}
+									</strong></td>
+								</tr>
+								</tbody>
+							</table>
+
+							<div class="border p-3 mb-3">
+								<h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
+
+								<div class="collapse" id="collapsebank">
+								<div class="py-2">
+									<p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+								</div>
+								</div>
+							</div>
+
+							<div class="border p-3 mb-3">
+								<h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsecheque" role="button" aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
+
+								<div class="collapse" id="collapsecheque">
+								<div class="py-2">
+									<p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+								</div>
+								</div>
+							</div>
+
+							<div class="border p-3 mb-5">
+								<h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
+
+								<div class="collapse" id="collapsepaypal">
+								<div class="py-2">
+									<p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+								</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<button class="btn btn-black btn-lg py-3 btn-block" type='submit' >Place Order</button>
+							</div>
+
+							</div>
+						</div>
+						</div>
+
+					</div>
+				</div>
+			</form> 
+		</div>
+	</div>
+
+
+
+
+
+	<script>
+		// Select the input fields
+		const priceInput = document.getElementById('price');
+		const quantityInput = document.getElementById('quantity');
+		const totalPriceInput = document.getElementById('total-price');
+		
+	  
+		// Function to calculate and update the total price
+		function updateTotalPrice() {
+			const pricePerItem = parseFloat(priceInput.value);
+			const quantity = parseInt(quantityInput.value);
+			if (quantity>1){
+			}
+			// Calculate total price
+			const totalPrice = pricePerItem * quantity;
+	  
+			// Update the total price input field
+			totalPriceInput.value = totalPrice.toFixed(2);
+		}
+	  
+		// Add event listeners for changes in the price and quantity inputs
+		priceInput.addEventListener('input', updateTotalPrice);
+		quantityInput.addEventListener('input', updateTotalPrice);
+	  
+	  
+	  </script>
+{% endblock content %}

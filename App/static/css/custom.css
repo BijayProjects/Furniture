@@ -1,4 +1,4 @@
-a.button {
+/* a.button {
     display: inline-block !important;
     padding: 5px 10px !important;
     background-color: #007bff !important;
@@ -10,4 +10,25 @@ a.button {
 
 a.button:hover {
     background-color: #0056b3 !important;
+} */
+
+.navbar-toggler{
+    border: 0;
+
+}
+
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus{
+    outline: none;
+    box-shadow: none;
+    border:0;
+}
+.navbar-icon{
+    width: 30px;
+    height: 30px;
+    background: red !important;
+    display: block;
+    transition: all .2s;
 }

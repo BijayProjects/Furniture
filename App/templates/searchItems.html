@@ -1,0 +1,64 @@
+{% extends 'partial/base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Home
+{% endblock title %}
+
+
+
+{% block content %}
+
+	<!-- Start Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>You Search for <br> {{search}} </h1>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="row">
+			
+			{% if get_items %}
+			{% for getItems in get_items %}
+								
+			<!-- Start Column 1 -->
+			<div class="col-12 col-md-4 col-lg-3 mb-5 py-5">
+				<a class="product-item" href="">
+					<img src=" {{getItems.product_images.url}} " style="height: 250px !important;" class="img-fluid product-thumbnail">
+					<strong><h3 class="product-title"> {{getItems.product_name}} </h3></strong>
+					<strong class="product-price">NRs. {{getItems.selling_price | floatformat:"g"}} </strong>
+
+					<span class="icon-cross">
+						<img src="{% static 'images/fast-delivery.png' %}" class="img-fluid">
+					</span>
+				</a>
+			</div> 
+			<!-- End Column 1 -->
+			{% endfor %}
+
+        
+		    {% else %} 
+            <h1>No Products Found</h1>
+			{% endif %} 
+            
+			
+			</div>
+		</div>
+	</div>
+
+<!-- End Hero Section -->
+    
+{% endblock content %}
+    

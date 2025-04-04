@@ -44,13 +44,13 @@
 					<div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0 py-2">
 						<div class="product-item-sm d-flex">
 							<div class="thumbnail">
-								<a href="">
+								<a href="{% url 'showcategory' Cat.slug %}">
 									<img src='{{Cat.category_images.url}}' alt="Image" class="img-fluid">
 								</a>
 							</div>
 							<div class="pt-4">
-								<a href="">
-									<h3> {{Cat.Title}} </h3>
+								<a href="{% url 'showcategory' Cat.slug %}">
+									<h3> {{Cat.category_title}} </h3>
 									<p>View All </p>
 								</a>
 

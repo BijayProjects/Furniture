@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category
+from .models import Category,Product,Newsletter,Comment
 from django.urls import reverse
 
 from django.utils.html import format_html
@@ -8,45 +8,66 @@ from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.platypus import Table, TableStyle
+
+import pandas as pd
 
 # Register your models here.
 
 # Category Download
 
-def export_as_pdf(modeladmin, request, queryset):
+def export_categories_as_pdf(modeladmin, request, queryset):
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="exported_data.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="categories.pdf"'
 
     p = canvas.Canvas(response, pagesize=letter)
     width, height = letter
 
-    y_position = height - 40  # Start near the top of the page
-    p.setFont("Helvetica-Bold", 14)
-    p.drawString(200, y_position, "Exported Data")
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(200, height - 50, "Exported Categories")  # Title
+    y_position = height - 80  
+
+    # Table Data (Header Row)
+    data = ["ID", "Category Title", "Slug"]
+
+    # Add Category Data
+    for category in queryset:
+        data.append([category.id, category.category_title, category.slug])
+
+    # Create Table
+    table = Table(data, colWidths=[50, 200, 200])
     
-    p.setFont("Helvetica", 12)
-    y_position -= 30  # Move down
+    # Style the Table
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # Header background
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  # Header text color
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center align all columns
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Bold header
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 10),  # Header padding
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),  # Row background
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Add grid lines
+    ])
+    table.setStyle(style)
 
-    for obj in queryset:
-        p.drawString(100, y_position, f"{obj.id} - {obj.name}")  # Modify fields accordingly
-        y_position -= 20  # Move to the next line
-
-        if y_position < 50:  # Create a new page if needed
-            p.showPage()
-            y_position = height - 40
+    # Draw Table
+    table.wrapOn(p, width, height)
+    table.drawOn(p, 50, y_position - (len(data) * 20))  # Adjust y-position dynamically
 
     p.showPage()
     p.save()
 
     return response
 
-export_as_pdf.short_description = "Export selected to PDF"
+export_categories_as_pdf.short_description = "Export selected categories to PDF"
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id','category_title','slug','images_tag','Action']
     list_filter = ('category_title',)
     list_display_links=['category_title']
+
+    actions = [export_categories_as_pdf]
 
 
 
@@ -75,27 +96,79 @@ class CategoryAdmin(admin.ModelAdmin):
 
     
 
-# def Export_to_Excel(modeladmin, request,queryset):
-#     """"
-#         Custom admin action to export selected objects to an excel file.
-#     """
+def Product_Pdf(modeladmin, request, queryset):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="Product_Data.pdf"'
 
-#     # convert queryset to dataFrame
-#     data = list(queryset.values('id','poduct_name','slug','selling_price','product_images', 'descriptions','category','quantity' ,'created_at'))
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
 
-#     for item in data:
-#         if item['created_at']:
-#             item['created_at'] = make_naive(item['created_at'])
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(200, height - 50, "Exported Products")  # Title
+    y_position = height - 80  
 
-#     df =pd.DataFrame(data)
+    
+    data = [["ID", "Product Name", "Slug", "Category", "Selling Price", "Descriptions", "Created At"]]
 
-#     # Create excel response
-#     response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-#     response["Content-Disposition"] = 'attachment; filename="products.xlsx"'
+   
+    for product in queryset:
+        data.append([
+            product.id,
+            product.product_name,
+            product.slug,
+            str(product.category),  # Ensure category is a string
+            product.selling_price,
+            (product.descriptions[:50] + "...") if product.descriptions else "",  # Shorten descriptions
+            product.created_at.strftime("%Y-%m-%d"),  # Format date
+        ])
 
-#     with pd.ExcelWriter(response, engine="openpyxl") as writer:
-#         df.to_excel(writer, index=False, sheet_name="Products")
+  
+    table = Table(data, colWidths=[50, 150, 100, 100, 80, 200, 100])
 
-#     return response
+    
+    style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),  # Header background
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),  # Header text color
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Center align all columns
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Bold header
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 10),  # Header padding
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),  # Row background
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Add grid lines
+    ])
+    table.setStyle(style)
 
-# Export_to_Excel.short_description = "Download Excel"  # Button label in Django admin
+   
+    table.wrapOn(p, width, height)
+    table.drawOn(p, 30, y_position - (len(data) * 20))  # Adjust Y-position
+
+    p.showPage()
+    p.save()
+
+    return response
+
+Product_Pdf.short_description = "Export selected products to PDF"
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display =['id','product_name','slug','category', 'selling_price','descriptions','images_view','created_at']
+    actions = [Product_Pdf]
+    list_display_links= ['product_name']
+
+    def images_view(self, obj):
+        if obj.product_images:
+            return format_html('<img src="{}" width="100" height="100" style="border-radius:10px;"/> '.format(obj.product_images.url))
+
+        return "(No Image Found)"
+    
+    images_view.short_description = 'Cat Image'
+
+
+@admin.register(Newsletter)
+
+class NewsleterAdmin(admin.ModelAdmin):
+    list_display=['id','userName','userEmail','submited_at']
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['id','firstName','lastName','emailAddress','Comments','Commented_at']

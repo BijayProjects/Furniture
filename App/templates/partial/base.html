@@ -57,16 +57,16 @@
 						<li class="nav-item active">
 							<a class="nav-link" href="/">Home</a>
 						</li>
-						<li><a class="nav-link" href="">Shop</a></li>
-						<li><a class="nav-link" href="">About us</a></li>
-						<li><a class="nav-link" href="">Blog</a></li>
-						<li><a class="nav-link" href="">Contact us</a></li>
+						<li><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
+						<li><a class="nav-link" href="{% url 'about' %}">About us</a></li>
+						<li><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+						<li><a class="nav-link" href="{% url 'contact' %}">Contact us</a></li>
 					</ul>
 					
-					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+					<!-- <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
 						<li><a class="nav-link" href="#"><img src="{% static 'images/user.svg' %}"></a></li>
 						<li><a class="nav-link" href=""><img src="{% static 'images/cart.svg' %}"></a></li>
-					</ul>
+					</ul> -->
 					<ul>
 						<li style="list-style: none;">
 							<!-- Button trigger modal -->
@@ -79,9 +79,9 @@
 								<div class="modal-dialog py-5">
 								<div class="modal-content">
 									<div class="modal-header d-flex justify-content-center">
-										<form class="d-flex" role="search">
+										<form class="d-flex" action="{% url 'productsearch' %}" method="POST" role="search">
 											{% csrf_token %}
-											<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched_items" >
+											<input class="form-control me-2" type="search" placeholder="Search with the name.." aria-label="Search" name="searched_items" >
 											<button class="btn btn-outline-success" type="submit">Search</button>
 										</form>
 									</div>
@@ -109,12 +109,13 @@
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="{% static 'images/envelope-outline.svg' %}" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="{% url 'newsletter' %}" method="POST" class="row g-3">
+								{% csrf_token %}
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" class="form-control" name="user-name" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" class="form-control" name="user-email" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">

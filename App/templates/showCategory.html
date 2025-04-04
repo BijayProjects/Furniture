@@ -17,7 +17,12 @@
 				<div class="row justify-content-between">
 					<div class="col-lg-5">
 						<div class="intro-excerpt">
-							<h1> {{show_category.Title}} </h1>
+							
+							{% if show_category %}
+								<h1> {{show_category.category_title}} </h1>
+								{% else %}
+								<h1>No Category Titile To Show (:</h1>
+							{% endif %}
 						</div>
 					</div>
 					<div class="col-lg-7">
@@ -39,14 +44,20 @@
 			<div class="row">
 			
 			<!-- Start Column 1 -->
-             
+            
+                
+                
+			{% if show_category %}
+				
+				 
+
              {% for show_products in show_category.product_set.all %}
                 
              
              <div class="col-12 col-md-4 col-lg-3 mb-5 py-5">
-                 <a class="product-item" href="{% url 'order_detail' show_products.slug %}">
-                     <img src=" {{show_products.Product_images.url}} " style="height: 250px !important;"  class="img-fluid product-thumbnail">
-                     <h3 class="product-title"> {{show_products.Product_name}} </h3>
+                 <a class="product-item" href="">
+                     <img src=" {{show_products.product_images.url}} " style="height: 250px !important;"  class="img-fluid product-thumbnail">
+                     <h3 class="product-title"> {{show_products.product_name}} </h3>
                      <strong class="product-price">NRs. {{show_products.selling_price | floatformat:"g" }} </strong>
                      
                      <span class="icon-cross">
@@ -55,6 +66,12 @@
                     </a>
             </div> 
                 {% endfor %}
+
+				{% else %}
+				<h2>Not Category product to show</h2>
+			
+			{% endif %}
+
                 <!-- End Column 1 -->
 				
             </div>

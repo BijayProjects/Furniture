@@ -1,0 +1,68 @@
+{% extends 'partial/base.html' %}
+
+{% load static %}
+
+{% block title %}
+	Shop
+{% endblock title %}
+	
+
+{% block content %}
+		
+
+
+	<!-- Start Hero Section -->
+		<div class="hero">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-5">
+						<div class="intro-excerpt">
+							<h1>Detail of Post</h1>
+						</div>
+					</div>
+					<div class="col-lg-7">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- End Hero Section -->
+
+    
+        
+    
+    
+	
+    
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			<div class="row">
+			
+			<!-- Start Column 1 -->
+             <div class="col-12">
+				<div class="card mb-3">
+					<div class="row p-2">
+						<div class="col-12">
+							<img src="{{vdb.blog_images.url}}" class="card-img-top" height="400px" alt="...">
+						</div>
+						
+						{% for images in vdb.images.all %}
+							<div class="col-4">
+								<img src="{{images.image.url}}" class="card-img-top" height="250px" alt="...">
+							</div>
+						{% endfor %}
+					</div>
+					<div class="card-body py-5">
+					  <h5 class="card-title text-center"> {{vdb.blog_title}} </h5>
+					  <p class="card-text"> {{vdb.blog_descriptions}} </p>
+					  <p class="card-text"><small class="text-body-secondary"> {{time_ago}} </small></p>
+					</div>
+				  </div>
+            </div> 
+                
+				
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

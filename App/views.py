@@ -1,6 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
+
+from datetime import timedelta
+from django.utils import timezone
 
 from .models import *
 
@@ -11,9 +14,12 @@ from django.core.mail import EmailMessage,send_mail
 def Home(request):
     category_show = Category.objects.all()
     product = Product.objects.all()
+    blog_show = Blog.objects.all().order_by('-id')
+    
     context = {
         'category_show':category_show,
-        'Products':product
+        'Products':product,
+        'show_blog':blog_show,
     }
     return render(request, 'index.html',context)
 
@@ -72,8 +78,38 @@ def ShowCategory(request,slug):
 def About(request):
     return render(request, 'about.html')
 
-def Blog(reqeust):
-    return render(reqeust, 'blog.html')
+def BlogPages(reqeust):
+    showVlog = Blog.objects.all().order_by('-id')
+    context = {
+        "show_blog":showVlog
+    }
+    return render(reqeust, 'blog.html',context)
+
+def ShowBlogs(request, id):
+    view_detail_blog = get_object_or_404(Blog, id=id)
+    now = timezone.now()
+    time_diff = now - view_detail_blog.post_at
+    minutes = time_diff.total_seconds() // 60
+    
+    if minutes <1:
+        time_ago = "Just Now"
+    elif minutes ==1:
+        time_ago='1 minute ago'
+    elif minutes < 60:
+        time_ago = f"{int(minutes)} minutes ago"
+    else:
+        hours = minutes//60
+        if hours == 1:
+            time_ago = "1 hour ago"
+        else:
+            time_ago = f"{int(hours)} hours ago"
+    
+    context ={
+        'vdb':view_detail_blog,
+        'time_ago':time_ago
+    }
+    
+    return render(request, 'showBlog.html',context)
 
 def Contact(request):
     if request.method == "POST":
@@ -89,3 +125,48 @@ def Contact(request):
 
     return render(request, 'contact.html')
 
+
+def OrderDetail(request,slug):
+    selected_product = Product.objects.get(slug=slug)
+    context = {
+        'show_details':selected_product
+    }
+    return render(request, 'OrderDetail.html',context)
+
+def CheckOut(request,slug):
+
+    if request.method == "POST":
+        checkouts = Product.objects.get(slug=slug)
+        productName = checkouts.product_name
+        productImages = checkouts.product_images
+        description = checkouts.descriptions
+        sellingPrice = checkouts.selling_price
+        quantity = request.POST['quantitys']
+        totalPrices = request.POST['total_price']
+        country = request.POST['country']
+        c_firstName = request.POST['firstName']
+        c_lastName = request.POST['lastName']
+        c_Address = request.POST['c_address']
+        address2 = request.POST.get("optionalAddress", '')
+        state = request.POST.get('c_state_country','')
+        email_address = request.POST['email']
+        phone_number = request.POST['phoneNumber']
+        orderNotes = request.POST.get('orderNote','')
+
+        reg_orders = Order(product_name=productName,product_images = productImages,descriptions=description,selling_price=sellingPrice,quantity=quantity,
+        total_price=totalPrices,country=country,ordered_By=f'{c_firstName} {c_lastName}', address = c_Address, address2=address2,state =state,emailAddress=email_address,phoneNumber=phone_number,orderNote=orderNotes)
+        reg_orders.save()
+
+        return redirect('successfull')
+
+
+
+
+    checkouts = Product.objects.get(slug=slug)
+    context = {
+        'checkOrders':checkouts
+    }
+    return render(request,'checkout.html',context)
+
+def Successfull(request):
+    return render(request, 'thankyou.html')

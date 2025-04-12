@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        
+    </title>
+</head>
+<body>
+
+    <!-- loader.html -->
+
+<style>
+  #loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .spinner {
+    border: 8px solid #6fd1ab;
+    border-top: 8px solid #3b5d50;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+</style>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  window.addEventListener("load", function(){
+    const loader = document.getElementById("loader");
+    loader.style.display = "none";
+  });
+</script>
+
+    
+</body>
+</html>

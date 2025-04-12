@@ -15,8 +15,10 @@
 					<div class="col-lg-5">
 						<div class="intro-excerpt">
 							<h1>About Us</h1>
-							<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-							<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+							<p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe nesciunt soluta aliquam ad nisi tempore iste adipisci aperiam consequuntur. Doloremque.</p>
+							<p><a href="{% url 'shop' %}" class="btn btn-secondary me-2">Shop Now</a>
+								<!-- <a href="#" class="btn btn-white-outline">Explore</a> -->
+							</p>
 						</div>
 					</div>
 					<div class="col-lg-7">
@@ -35,8 +37,29 @@
 			<div class="row justify-content-between align-items-center">
 				<div class="col-lg-6">
 					<h2 class="section-title">Why Choose Us</h2>
-					<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-
+						<p>We’re not just another furniture store — we’re your trusted partner in creating beautiful, comfortable spaces that truly feel like home. Here’s why thousands of happy customers choose us for their furniture needs:</p>
+				
+						<h5>1. Premium Quality Furniture</h5>
+						<p>From cozy corners to modern workspaces, our handpicked collection offers stylish, durable, and high-quality furniture designed to elevate every space.</p>
+				
+						<h5>2. Seamless Online Shopping Experience</h5>
+						<p>Enjoy a smooth, secure, and user-friendly shopping journey — browse, select, and order your favorite pieces from the comfort of your home with just a few clicks.</p>
+				
+						<h5>3. Fast & Reliable Delivery</h5>
+						<p>We deliver across multiple locations with care and speed — ensuring your furniture arrives safely, on time, and ready to transform your space.</p>
+				
+						<h5>4. Customization Options</h5>
+						<p>Make it yours! Personalize select furniture pieces to match your unique style, size preferences, and design needs.</p>
+				
+						<h5>5. Affordable Prices & Exciting Deals</h5>
+						<p>Style meets savings — discover competitive pricing, exclusive offers, and exciting deals all year round.</p>
+				
+						<h5>6. Exceptional Customer Support</h5>
+						<p>We’re here for you every step of the way. Our friendly support team is always ready to assist — from product selection to after-sales service.</p>
+				
+						<h5>7. Easy Returns & Warranty Protection</h5>
+						<p>Shop with confidence! We offer hassle-free returns and warranty coverage on selected products, ensuring peace of mind with every purchase.</p>
+					<hr>
 					<div class="row my-5">
 						<div class="col-6 col-md-6">
 							<div class="feature">
@@ -44,7 +67,7 @@
 									<img src='{% static "images/truck.svg" %}' alt="Image" class="imf-fluid">
 								</div>
 								<h3>Fast &amp; Free Shipping</h3>
-								<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								<p> We know waiting isn’t fun — that’s why we offer fast and free shipping on every order. No extra costs, no long waits. Just happy deliveries! </p>
 							</div>
 						</div>
 
@@ -54,7 +77,7 @@
 									<img src="{% static 'images/bag.svg' %}" alt="Image" class="imf-fluid">
 								</div>
 								<h3>Easy to Shop</h3>
-								<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								<p>We’ve made shopping super simple for you. Easy browsing, smooth checkout, and quick support — so you can find what you love without any hassle.</p>
 							</div>
 						</div>
 
@@ -64,7 +87,7 @@
 									<img src="{% static 'images/support.svg' %}" alt="Image" class="imf-fluid">
 								</div>
 								<h3>24/7 Support</h3>
-								<p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+								<p>We’re always here for you — anytime, anywhere. Friendly support ready to help, 24/7.</p>
 							</div>
 						</div>
 
@@ -166,6 +189,7 @@
 
 	
 
+ {% comment %}
 	<!-- Start Testimonial Slider -->
 	<div class="testimonial-section before-footer-section">
 		<div class="container">
@@ -262,6 +286,8 @@
 			</div>
 		</div>
 	</div>
-	<!-- End Testimonial Slider -->
+	<!-- End Testimonial Slider -->	
+	 {% endcomment %}
+		
 
 	{% endblock content %}

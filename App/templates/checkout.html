@@ -1,3 +1,4 @@
+
 {% extends 'partial/base.html' %}
 {% load static %} 
 
@@ -32,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-			<form action="" method="POST">
+			<form action="{% url 'checkout' checkOrders.slug %}" method="POST">
 				{% csrf_token %}
 				
 				<div class="row">
@@ -70,8 +71,8 @@
 
 						<div class="form-group row">
 							<div class="col-md-12">
-							<label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
-							<input type="text" class="form-control" id="c_state_country" name="c_state_country" required placeholder="Nepal/bagmati/lalitpur..">
+							<label for="c_state_country" class="text-black">State / City <span class="text-danger"></span></label>
+							<input type="text" class="form-control" id="c_state_country" name="c_state_country" placeholder="Nepal/bagmati/lalitpur..">
 							</div>
 							<!-- <div class="col-md-6">
 							<label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
@@ -126,18 +127,22 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+										<td class="text-black font-weight-bold">
+											<strong>Subtotal</strong>
+										</td>
 										
-									<td class="text-black">NRs. {{subtotal | floatformat:'2g' }}
-										<input type="hidden" name='main_price'  id="price" value="123" min="1" readonly>	
+									<td class="text-black">NRs. {{checkOrders.selling_price | floatformat:'2g' }}
+										<input type="hidden" name='main_price'  id="price" value="{{checkOrders.selling_price}}" min="1" readonly>	
 									</td>
+									
 								</tr>
 								<tr>
 									<td>
-										{{VOD.Product_name}} <strong class="mx-2">x</strong> <input type="number" name='quantitys' class='input-form-order-qualtity text-center form-control'  id="quantity" value="1" min="1" required='required' aria-label="Example text with button addon" aria-describedby="button-addon1" >  </td>
+										{{checkOrders.product_name}} </td>
 										
-									<td>
-										NRs.<input type="number" name='total_price' class='input-form-order'  id="total-price" value="100" readonly>
+									</td>
+									<td class="text-black font-weight-bold">
+										Quantity:<input type="number" name='quantitys' class='input-form-order-qualtity text-center form-control w-10'  id="quantity" value="1" min="1" required='required' aria-label="Example text with button addon" aria-describedby="button-addon1" >
 									</td>
 								</tr>
 								<tr>
@@ -156,7 +161,8 @@
 								</tr>
 								<tr>
 									<td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-									<td class="text-black font-weight-bold"><strong> NRs.{{GA | floatformat:'2g'}}
+									<td class="text-black font-weight-bold"><strong>
+										NRs. <input type="number" name='total_price' class='input-form-order'  id="total-price" value="{{checkOrders.selling_price}}" readonly>
 									</strong></td>
 								</tr>
 								</tbody>
@@ -227,7 +233,7 @@
 			const totalPrice = pricePerItem * quantity;
 	  
 			// Update the total price input field
-			totalPriceInput.value = totalPrice.toFixed(2);
+			totalPriceInput.value = totalPrice;
 		}
 	  
 		// Add event listeners for changes in the price and quantity inputs

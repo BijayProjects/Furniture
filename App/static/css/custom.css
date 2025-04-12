@@ -32,3 +32,24 @@ a.button:hover {
     display: block;
     transition: all .2s;
 }
+/* a{
+    color: #000000 !important;
+}
+a:hover{
+    color: rgb(10, 168, 10) !important;
+} */
+
+
+.edit-button{
+    background-color:transparent !important;
+    padding:5%;
+    font-size: 25px;
+    color: #000000 !important;
+    border: 1px solid !important;
+    border-radius: 5px;
+    transition: .5s ease-in-out;
+}
+.edit-button:hover{
+    background: #000000 !important;
+    color: #ffffff !important;
+}

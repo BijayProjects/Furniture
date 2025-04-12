@@ -15,8 +15,8 @@
 					<div class="col-lg-5">
 						<div class="intro-excerpt">
 							<h1>Blog</h1>
-							<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-							<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+							<!-- <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+							<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p> -->
 						</div>
 					</div>
 				</div>
@@ -32,17 +32,20 @@
 			
 			<div class="row">
 
-				<div class="col-12 col-sm-6 col-md-4 mb-5">
-					<div class="post-entry">
-						<a href="#" class="post-thumbnail"><img src="{% static 'images/post-1.jpg' %}" alt="Image" class="img-fluid"></a>
-						<div class="post-content-entry">
-							<h3><a href="#">First Time Home Owner Ideas</a></h3>
-							<div class="meta">
-								<span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
+				{% for blogs in show_blog %}
+					
+					<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0 py-4">
+						<div class="post-entry">
+							<a href="{% url 'showblog' blogs.id %}" class="post-thumbnail"><img src="{{blogs.blog_images.url}}" style="height: 350px !important; width: 100%;" alt="Blog Image" class="img-fluid"></a>
+							<div class="post-content-entry">
+								<h3><a href="{% url 'showblog' blogs.id %}"> {{blogs.blog_title}} </a></h3>
+								<div class="meta">
+									<span><span>on <a href="{% url 'showblog' blogs.id %}"> {{blogs.post_at.date}} </a></span>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				{% endfor %}
 
 				
 			</div>

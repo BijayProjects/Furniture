@@ -1,0 +1,39 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+  .notif-badge {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 12px;
+    margin-left: 5px;
+    position: relative;
+    top: -2px;
+  }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    fetch("{% url 'admin:notification_count' %}")
+    .then(response => response.json())
+    .then(data => {
+        if (data.count > 0) {
+            const link = document.querySelector('a[href$="/orders/"]');  // or your model link
+            if(link) {
+                const badge = document.createElement('span');
+                badge.className = 'notif-badge';
+                badge.innerText = data.count;
+                link.appendChild(badge);
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

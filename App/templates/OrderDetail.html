@@ -32,33 +32,7 @@
 			  <div class="col-md-6">
 				<div class="row mb-5">
 				  <div class="col-md-6 mb-3 mb-md-0">
-					<img src="" name="Ordered_Product_Images" alt="Image" class="img-fluid">
-				  </div>
-				</div>
-				<div class="row">
-				  <div class="site-blocks-table">
-					<table class="table">
-					  <tbody>
-						<tr>
-						  <td>
-							<label for="quantity">Quantity: </label>
-						  </td>
-						  <td>
-							  <div class="col-md-12 input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 150px;">
-								  	<!-- <div class="input-group-prepend">
-									  <button class="btn btn-outline-black decrease" type="button" id="decrease-btn">&minus;</button>
-									</div> -->
-									<input type="number" name='quantitys' class='input-form-order-qualtity text-center form-control w-50'  id="quantity" value="1" min="1" required='required' aria-label="Example text with button addon" aria-describedby="button-addon1" ><br><br>
-									<!-- <input type="number" name="quantity" id="quantity" class="form-control text-center quantity-amount" value="1" min="1" aria-label="Example text with button addon" aria-describedby="button-addon"> -->
-							  	<!-- <div class="input-group-append">
-									<button class="btn btn-outline-black increase" type="button" id="increase-btn">&plus;</button>
-							  	</div> -->
-								</div>
-						  </td>
-						</tr>
-						
-					  </tbody>
-					</table>
+					<img src="{{show_details.product_images.url}}" alt="Image" class="img-fluid">
 				  </div>
 				</div>
 			  </div>
@@ -67,7 +41,7 @@
 				  <div class="col-md-7">
 					<div class="row">
 					  <div class="col-md-12 text-right border-bottom mb-5">
-						<h3 class="text-black h4 text-uppercase"> </h3>
+						<h3 class="text-black h4 text-uppercase"> {{show_details.product_name}} </h3>
 					  </div>
 					</div>
 					<div class="row mb-3">
@@ -75,79 +49,41 @@
 						<span class="text-black">Price:</span>
 					  </div>
 					  <div class="col-md-6 text-right">
-						<strong class="text-black" id="subtotal">NRs. 123</strong>
-						<input type="hidden" name='main_price'  id="price" value="123" min="1" readonly>
+						<strong class="text-black" id="subtotal">NRs. {{show_details.selling_price | floatformat:'g' }} </strong>
 					  </div>
 					</div>
 
-					<!-- <div class="row mb-5">
-					  <div class="col-md-6">
-						<span class="text-black">Delivery Fee</span>
-					  </div>
-					  <div class="col-md-6 text-right">
-						<strong class="text-black">Nrs. 
-							
-							{% if detail_product.Charges %}
-								{{detail_product.Charges}}
+					<div class="row mb-3">
+						<div class="col-md-6">
+						  <span class="text-black">Quantity</span>
+						</div>
+						<div class="col-md-6 text-right">
+						  <strong> 1</strong>
+						</div>
+					</div>
 
-								{% else %}
-								free delivery
-							{% endif %}
-								
-						</strong>
-					  </div>
-					</div> -->
-	  
 					<div class="row mb-3">
 					  <div class="col-md-6">
 						<span class="text-black">Total</span>
 					  </div>
 					  <div class="col-md-6 text-right">
-						<input type="number" name='total_price' class='input-form-order'  id="total-price" value="123" readonly>
+						<strong> NRs.{{show_details.selling_price | floatformat:'g' }}</strong>
 					  </div>
 					</div>
 	  
 					<div class="row">
 					  <div class="col-md-12">
-						<input type="submit" class="btn btn-black btn-lg" value="Proceed To Checkout">
-						<!-- <a href="" class="btn btn-black btn-lg" >Proceed To Checkout</a> -->
+						<!-- <input type="submit" class="btn btn-black btn-lg" value="Proceed To Checkout"> -->
+						<a href="{% url 'checkout' show_details.slug %}" class="btn btn-black btn-lg" >Proceed To Checkout</a>
 					  </div>
 					</div>
 				  </div>
 				</div>
 			  </div>
 			  <div class="col-md-6">
-				<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, modi?</p>
+				<p> {{show_details.descriptions}} </p>
 			  </div>
 			</div>
 		</div>
 	  </div>
-
-	  <script>
-		// Select the input fields
-		const priceInput = document.getElementById('price');
-		const quantityInput = document.getElementById('quantity');
-		const totalPriceInput = document.getElementById('total-price');
-		
-	  
-		// Function to calculate and update the total price
-		function updateTotalPrice() {
-			const pricePerItem = parseFloat(priceInput.value);
-			const quantity = parseInt(quantityInput.value);
-			if (quantity>1){
-			}
-			// Calculate total price
-			const totalPrice = pricePerItem * quantity;
-	  
-			// Update the total price input field
-			totalPriceInput.value = totalPrice;
-		}
-	  
-		// Add event listeners for changes in the price and quantity inputs
-		priceInput.addEventListener('input', updateTotalPrice);
-		quantityInput.addEventListener('input', updateTotalPrice);
-	  
-	  
-	  </script>
-
 {% endblock content %}

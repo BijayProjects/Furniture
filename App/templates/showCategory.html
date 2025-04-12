@@ -44,18 +44,13 @@
 			<div class="row">
 			
 			<!-- Start Column 1 -->
-            
-                
                 
 			{% if show_category %}
 				
-				 
-
              {% for show_products in show_category.product_set.all %}
-                
-             
+
              <div class="col-12 col-md-4 col-lg-3 mb-5 py-5">
-                 <a class="product-item" href="">
+                 <a class="product-item" href="{% url 'orderdetail' %}">
                      <img src=" {{show_products.product_images.url}} " style="height: 250px !important;"  class="img-fluid product-thumbnail">
                      <h3 class="product-title"> {{show_products.product_name}} </h3>
                      <strong class="product-price">NRs. {{show_products.selling_price | floatformat:"g" }} </strong>

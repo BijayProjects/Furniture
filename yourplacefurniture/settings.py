@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'App',
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'App',
 ]
 
 MIDDLEWARE = [
@@ -164,10 +164,11 @@ JAZZMIN_SETTINGS = {
         "App.category":"fas fa-book",
         "App.newsletter":"fas fa-envelopes-bulk",
         "App.comment":"fas fa-comment",
-    #     "App.delivery_charges": "fas fa-money-bills",
-
         "App.product": "fas fa-boxes-packing",
-    #     "App.order": "fas fa-truck-fast"
+        "App.order": "fas fa-truck-fast",
+        "App.paidorder":"fas fa-list-check",
+        "App.blog":"fab fa-blogger-b",
+        "App.blogimage":"fas fa-images"
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",

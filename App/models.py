@@ -91,18 +91,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     orderNote = models.TextField(blank=True, null=True)
     order_date = models.DateTimeField(auto_now_add= True, blank=False)
-
-    # def save(self, *args, **kwargs):
-    #     if self.status == 'Completed':
-    #         if not PaidOrder.objects.filter(ordered_By=self.ordered_By, total_price =self.total_price).exists():
-    #             PaidOrder.objects.create(
-    #                 ordered_By=self.ordered_By,
-    #                 total_price=self.total_price,
-    #             )
-    #     super().save(*args, **kwargs)
-
-    # def __str__(self):
-    #     return self.product_name
+    is_read = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
         creating = self.pk is None  
@@ -117,8 +106,10 @@ class Order(models.Model):
             PaidOrder.objects.create(
                 ordered_By=self.ordered_By,
                 address=self.address,
+                phone_number = self.phoneNumber,
                 product_name=self.product_name,
                 product_images=self.product_images,
+                status = self.status,
                 quantity=self.quantity,
                 total_price=self.total_price,
             )
@@ -128,9 +119,11 @@ class Order(models.Model):
 
 class PaidOrder(models.Model):
     ordered_By = models.CharField(max_length=200)
+    phone_number= models.IntegerField()
     address = models.TextField()
     product_name = models.CharField(max_length=200)
     product_images = models.ImageField(upload_to='OrderMedia')
+    status = models.CharField(max_length=50)
     quantity = models.PositiveIntegerField()
     total_price =models.PositiveIntegerField()
     completed_at = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,17 @@
+{% extends "admin/index.html" %}
+{% load static %}
+{% block content %}
+    <div class="notifications" style="margin-bottom: 20px;">
+        <h2>🔔 Notifications</h2>
+        <ul>
+        {% for note in notifications %}
+            <li style="color: {% if not note.is_read %}red{% else %}gray{% endif %}">
+                {{ note.message }} <small>({{ note.created_at|date:"SHORT_DATETIME_FORMAT" }})</small>
+            </li>
+        {% empty %}
+            <li>No notifications</li>
+        {% endfor %}
+        </ul>
+    </div>
+    {{ block.super }}
+{% endblock %}

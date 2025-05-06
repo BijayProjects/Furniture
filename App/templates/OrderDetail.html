@@ -76,6 +76,10 @@
 						<!-- <input type="submit" class="btn btn-black btn-lg" value="Proceed To Checkout"> -->
 						<a href="{% url 'checkout' show_details.slug %}" class="btn btn-black btn-lg" >Proceed To Checkout</a>
 					  </div>
+					  <div class="col-md-12 py-3">
+						<!-- <input type="submit" class="btn btn-black btn-lg" value="Proceed To Checkout"> -->
+						<a href="https://wa.me/9779806158068?text=Product%20Name={{show_details.product_name}}%20,Quantity=1%20,NRs.={{show_details.selling_price | floatformat:'g' }}%20" target="_blank"  class="btn btn-green btn-lg whapsapp-btn" style="background-color: #4cca5a; border: 1px solid #4cca5a;" ><i class="fa-brands fa-whatsapp" style="color: #017919; font-size: 25px;"></i> Order From WhatsApp</a>
+					  </div>
 					</div>
 				  </div>
 				</div>

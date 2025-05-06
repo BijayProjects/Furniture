@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
+from django.http import JsonResponse
 
 from datetime import timedelta
 from django.utils import timezone
@@ -10,6 +11,14 @@ from .models import *
 from django.core.mail import EmailMessage,send_mail
 
 # Create your views here.
+
+def get_notifications(request):
+    if not request.user.is_superuser:
+        return JsonResponse[{'notifications': []}]
+    
+    unread = Order.objects.filter(is_read=False).order_by('-order_date')[:5]
+    data = [{'id': n.id, 'message': n.message, 'created_at': n.created_at.strftime('%Y-%m-%d %H:%M')} for n in unread]
+    return JsonResponse({'notifications': data})
 
 def Home(request):
     category_show = Category.objects.all()
@@ -155,6 +164,18 @@ def CheckOut(request,slug):
 
         reg_orders = Order(product_name=productName,product_images = productImages,descriptions=description,selling_price=sellingPrice,quantity=quantity,
         total_price=totalPrices,country=country,ordered_By=f'{c_firstName} {c_lastName}', address = c_Address, address2=address2,state =state,emailAddress=email_address,phoneNumber=phone_number,orderNote=orderNotes)
+
+        # E-mail sending querys
+        subject = 'Your Orders Details From YPF'
+        messages = f'''
+                Product Name: {productName}\n
+                Descriptions: {description}\n
+                Quantity: {quantity}\n
+                Gross Amount: {totalPrices}\n
+            '''
+        email_from = 'bijay2310tamang@gmail.com'
+        recipient_list = [email_address]
+        send_mail(subject,messages,email_from,recipient_list)
         reg_orders.save()
 
         return redirect('successfull')

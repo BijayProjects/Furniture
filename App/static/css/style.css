@@ -200,6 +200,9 @@ a {
 .section-title {
   color: #2f2f2f; }
 
+.whapsapp-btn:hover{
+  background-color: #399944 !important;
+}
 .product-section {
   padding: 7rem 0; }
   .product-section .product-item {
